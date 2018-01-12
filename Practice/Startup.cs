@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Practice.Data;
 using Practice.Models;
 using Practice.Services;
+using Practice.Interfaces;
 
 namespace Practice
 {
@@ -36,6 +37,10 @@ namespace Practice
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+
+            iTimeProvider myFakeTimeProvider = new FakeTimeProvider();
+            myFakeTimeProvider.Now = DateTime.Now;
+            services.AddSingleton<iTimeProvider>(myFakeTimeProvider);
 
             services.AddMvc();
         }

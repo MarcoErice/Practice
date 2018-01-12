@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Practice.Interfaces
 {
-    interface iTimeProvider
+    public interface iTimeProvider
     {
         DateTime Now { get; set; }
     }
