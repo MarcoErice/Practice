@@ -7,7 +7,8 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a> |
+    <a asp-controller="Artists" asp-action="Index">Back to Artists</a>
 </p>
 <table class="table">
     <thead>
@@ -28,12 +29,12 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Artist.ArtistId)
+                @Html.DisplayFor(modelItem => item.Artist.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.SongId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SongId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SongId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.SongId" asp-route-slug="@Practice.Utils.Slug.Slugify(item.Title)">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SongId" asp-route-slug="@Practice.Utils.Slug.Slugify(item.Title)">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SongId" asp-route-slug="@Practice.Utils.Slug.Slugify(item.Title)">Delete</a>
             </td>
         </tr>
 }

@@ -28,7 +28,14 @@ namespace Practice.Controllers
             var applicationDbContext = _context.Songs.Include(s => s.Artist);
             return View(await applicationDbContext.ToListAsync());
         }
-      
+        public async Task<IActionResult> IndexByArtist(int id)
+        {
+            var artist = _context.Artist.Single(a => a.ArtistId == id);
+            _logger.LogWarning("The artist of this songa are: " + artist.Name);
+            return View("Index", await _context.Songs.Where(song => song.ArtistId == id)
+                .Include(s => s.Artist).ToListAsync());
+        }
+
         // GET: Songs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -85,7 +92,7 @@ namespace Practice.Controllers
             {
                 return NotFound();
             }
-            ViewData["ArtistId"] = new SelectList(_context.Artist, "ArtistId", "ArtistId", song.ArtistId);
+            ViewData["ArtistId"] = new SelectList(_context.Artist, "ArtistId", "Name", song.ArtistId);
             return View(song);
         }
 
