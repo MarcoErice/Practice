@@ -27,7 +27,7 @@ namespace Practice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseInMemoryDatabase(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseInMemoryDatabase("Test"));
             //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -41,7 +41,9 @@ namespace Practice
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +66,7 @@ namespace Practice
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            DbSeeder.Seed(context, userManager, roleManager);
         }
     }
 }
